@@ -1,0 +1,29 @@
+DROP TABLE IF EXISTS tmp;
+
+CREATE TABLE tmp
+AS
+SELECT artist_id
+	, prediction_score AS Plays
+	, '20150901' AS Ds
+FROM line_tmp;
+
+DROP TABLE IF EXISTS line_as_predict;
+
+CREATE TABLE line_as_predict
+AS
+SELECT /*+ mapjoin(b) */ a.artist_id AS artist_id
+	, a.plays AS plays
+	, b.goal_ds AS ds
+FROM (
+	SELECT *
+	FROM tmp
+) a
+JOIN (
+	SELECT *
+	FROM goal_date
+) b
+ON a.ds <= b.goal_ds;
+
+DROP TABLE IF EXISTS tmp;
+--drop table if exists mars_tianchi_artist_plays_predict;
+--alter table line_as_predict rename to mars_tianchi_artist_plays_predict;

@@ -1,0 +1,31 @@
+--平均值做预测值
+DROP TABLE IF EXISTS tmp;
+
+CREATE TABLE tmp
+AS
+SELECT artist_id
+	, CAST(CAST(num AS INT) AS STRING) AS Plays
+	, '20150901' AS Ds
+FROM artistId_avgplay_ds
+WHERE month = 201506;
+
+DROP TABLE IF EXISTS avg_month_7_as_predict;
+
+CREATE TABLE avg_month_7_as_predict
+AS
+SELECT /*+ mapjoin(b) */ a.artist_id AS artist_id
+	, a.plays AS plays
+	, b.goal_ds AS ds
+FROM (
+	SELECT *
+	FROM tmp
+) a
+JOIN (
+	SELECT *
+	FROM goal_date
+) b
+ON a.ds <= b.goal_ds;
+
+DROP TABLE IF EXISTS tmp;
+--drop table if exists mars_tianchi_artist_plays_predict;
+--alter table avg_month_8_as_predict rename to mars_tianchi_artist_plays_predict;

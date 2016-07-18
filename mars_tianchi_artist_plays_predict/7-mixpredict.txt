@@ -1,0 +1,54 @@
+DROP TABLE IF EXISTS mixpredict;
+
+CREATE TABLE mixpredict
+AS
+SELECT artist_id
+	, CAST(AVG(plays) AS STRING) AS plays
+	, ds
+FROM (
+	SELECT *
+	FROM avg_last10day_as_predict
+	UNION ALL
+	SELECT *
+	FROM line_as_predict
+) tmp
+GROUP BY artist_id, 
+	ds;
+--drop table if exists mars_tianchi_artist_plays_predict;
+--alter table mixpredict rename to mars_tianchi_artist_plays_predict;
+
+--µÚ¶þ¸ö
+DROP TABLE IF EXISTS mixpredict;
+
+CREATE TABLE mixpredict
+AS
+SELECT artist_id
+	, CAST(plays AS STRING) AS plays
+	, ds
+FROM (
+	SELECT *
+	FROM avg_last10day_as_predict
+	WHERE ds >= 20150901
+		AND ds <= 20150930
+	UNION ALL
+	SELECT artist_id
+		, CAST(AVG(plays) / 5 AS STRING) AS plays
+		, ds
+	FROM (
+		SELECT artist_id
+			, plays * 9 AS plays
+			, ds
+		FROM avg_last10day_as_predict
+		WHERE ds >= 20151001
+			AND ds <= 20151030
+		UNION ALL
+		SELECT *
+		FROM line_as_predict
+		WHERE ds >= 20151001
+			AND ds <= 20151030
+	) tmp
+	GROUP BY artist_id, 
+		ds
+) tmp2
+--drop table if exists mars_tianchi_artist_plays_predict;
+--alter table mixpredict rename to mars_tianchi_artist_plays_predict;

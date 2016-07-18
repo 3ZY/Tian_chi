@@ -1,0 +1,23 @@
+DROP TABLE IF EXISTS tmp;
+
+CREATE TABLE tmp
+AS
+SELECT artist_id
+	, wm_concat(',', num) AS num
+FROM artistId_avgplay_ds
+GROUP BY artist_id;
+
+DROP TABLE IF EXISTS artistid_avg_c1_c2_more;
+
+CREATE TABLE artistid_avg_c1_c2_more
+AS
+SELECT artist_id
+	, CAST(split_part(num, ',', 1) AS INT)
+	, CAST(split_part(num, ',', 2) AS INT)
+	, CAST(split_part(num, ',', 3) AS INT)
+	, CAST(split_part(num, ',', 4) AS INT)
+	, CAST(split_part(num, ',', 5) AS INT)
+	, CAST(split_part(num, ',', 6) AS INT)
+FROM tmp;
+
+DROP TABLE tmp;

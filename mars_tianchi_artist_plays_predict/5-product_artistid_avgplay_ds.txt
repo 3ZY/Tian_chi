@@ -1,0 +1,26 @@
+DROP TABLE IF EXISTS tmp;
+
+CREATE TABLE tmp
+AS
+SELECT  /*+ MAPJOIN(b) */ 
+	a.artist_id
+	, a.action_type
+	, a.num
+	, b.month
+FROM (select artist_id,action_type,num,ds from artistId_actionType_num_ds) a 
+JOIN (select month from month_source) b
+ON a.ds like concat(b.month,'%');
+
+DROP TABLE IF EXISTS artistId_avgplay_ds;
+
+CREATE TABLE artistId_avgplay_ds
+AS
+SELECT artist_Id
+	, avg(num) AS num
+	, month
+FROM tmp
+where action_type=1
+GROUP BY artist_id, 
+	month;
+
+DROP TABLE IF EXISTS tmp;

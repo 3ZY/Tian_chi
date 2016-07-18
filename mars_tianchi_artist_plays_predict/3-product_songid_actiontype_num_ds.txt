@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS songId_actionType_num_ds;
+
+CREATE TABLE songId_actionType_num_ds
+AS
+SELECT song_id
+	, action_type
+	, COUNT(action_type) AS num
+	, ds
+FROM mars_tianchi_user_actions
+GROUP BY song_id, 
+	action_type, 
+	ds;

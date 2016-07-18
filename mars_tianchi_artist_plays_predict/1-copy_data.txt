@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS mars_tianchi_user_actions;
+
+DROP TABLE IF EXISTS mars_tianchi_songs;
+
+CREATE TABLE mars_tianchi_user_actions
+AS
+SELECT *
+FROM odps_tc_257100_f673506e024.mars_tianchi_user_actions;
+
+CREATE TABLE mars_tianchi_songs
+AS
+SELECT *
+FROM odps_tc_257100_f673506e024.mars_tianchi_songs;

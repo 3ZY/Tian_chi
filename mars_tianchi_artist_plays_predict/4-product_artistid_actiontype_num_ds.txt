@@ -1,0 +1,27 @@
+DROP TABLE IF EXISTS songId_artistId_actionType_ds_tmp;
+
+CREATE TABLE songId_artistId_actionType_ds_tmp
+AS
+SELECT a.song_id
+	, b.artist_id
+	, a.action_type
+	, a.num
+	, a.ds
+FROM (select song_id,action_type,num,ds from songId_actionType_num_ds) a
+JOIN (select artist_id,song_id from mars_tianchi_songs) b
+ON a.song_id =b.song_id;
+
+DROP TABLE IF EXISTS artistId_actionType_num_ds;
+
+CREATE TABLE artistId_actionType_num_ds
+AS
+SELECT artist_Id
+	, action_type
+	, sum(num) AS num
+	, ds
+FROM songId_artistId_actionType_ds_tmp
+GROUP BY artist_id, 
+	action_type, 
+	ds;
+
+DROP TABLE IF EXISTS songId_artistId_actionType_ds_tmp;

@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS artistId_goalds;
+
+CREATE TABLE artistId_goalds
+AS
+SELECT DISTINCT artist_id
+	, CAST(ds + 200 AS INT) AS goal_ds
+FROM artistId_actionType_num_ds
+WHERE ds >= 20150701
+	AND ds <= 20150730
+	OR ds >= 20150801
+	AND ds <= 20150830;

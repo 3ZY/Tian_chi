@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS goal_date;
+
+CREATE TABLE goal_date
+AS
+SELECT DISTINCT CAST(CAST(ds + 200 AS INT) AS STRING) AS goal_ds
+FROM mars_tianchi_user_actions
+WHERE ds >= 20150701
+	AND ds <= 20150730
+	OR ds >= 20150801
+	AND ds <= 20150830;

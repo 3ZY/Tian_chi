@@ -1,0 +1,18 @@
+select aa.artist_rank_id,aa.d1
+,bb.median120 as play7   
+from
+(
+select artist_rank_id
+,d1+184 as d1
+from ${t1}
+where d1<61
+) aa
+join
+(
+  	select artist_rank_id
+   ,median(d1_action) as median120
+	from ${t1}
+   where d1>61
+   group by artist_rank_id
+  ) bb
+  on aa.artist_rank_id=bb.artist_rank_id
