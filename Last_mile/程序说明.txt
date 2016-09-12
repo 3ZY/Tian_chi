@@ -1,0 +1,35 @@
+C_time_hh_max = '20'  最晚送达时间20：00
+C_time_hh = '08' 起始小时
+C_time_mi = '00' 起始分钟
+C_speed = 15 # km/h 快递员速度
+C_serv = 3  服务时间公式系数
+C_serv_fix = 5  服务时间公式系数
+C_load = 140  快递员最大负载
+C_cheat = 10  最大作弊次数
+C_penalty_tw = 5  超时处罚
+C_penalty_base = 10  时间错误处罚
+C_man=1000  快递员数量
+
+def getmins(time_str)：获取和8:00时差（分钟）
+def dist(longi1, lati1, longi2, lati2):计算两点距离（分钟）
+def serv(num_ord):计算服务时间（分钟）
+
+points={} 所有地点信息
+site_points = set()  网点集合
+spot_points=set()  配送点集合
+shop_points=set()  商家集合
+f_orders={} 电商订单
+f_spot_oid={}  配送点对应的电商订单id
+site_spots={}  网点对应的配送点列表
+e_orders={}  O2O订单
+e_spot_oids={} 配送点对应的O2O订单id列表
+shop_spots={} 商户对应的配送点集合
+site_spots_dis={} 网点对应的配送点距离
+site_spot_spots_dis={} #网点下各配送点之间的距离
+site_mans={} #网点下的快递员集合
+man_cost={} #快递员耗时
+site_cost={} #网点耗时
+man_paths={} #快递员路径行为
+now_dman=1 #当前指向的快递员
+site_paths={} #网点下的节约表路径
+site_paths_cost={} #网点下路径及耗时
